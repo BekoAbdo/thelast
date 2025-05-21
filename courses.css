@@ -1,0 +1,49 @@
+.divWelcome{
+  display: flex;
+  flex-direction:column;
+  gap: 10px;
+  margin: 20px 5px;
+  align-items: center;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.imgWelcome{
+  width: 270px;
+}
+.pWelcome{
+  border: 1px solid;
+  margin-bottom: 0px;
+  padding: 5px;
+  border-radius: 20px;
+  background-color: white;
+  color: black;
+  font-family: 'Times New Roman', Times, serif;
+  line-height: 25px;
+  font-weight: 900;
+  box-shadow: 3px 3px 10px black;
+}
+.h1Welcome{
+  text-align: center;
+  color: white;
+   width: fit-content;
+   display: flex;
+   justify-self: center;
+  padding: 5px;
+  box-shadow:3px 3px 10px black ;
+  border-radius: 20px;
+}
+
+
+
+
+.divBtn{
+  margin-top: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  
+}
+button{
+  width: 200px;
+}

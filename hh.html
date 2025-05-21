@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الكورسات الطبية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --online-color: #27ae60;
+            --offline-color: #e67e22;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .search-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+            padding-right: 50px;
+        }
+
+        #search-input:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .course-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .course-title h3 {
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .course-title .ar-title {
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .instructor {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .instructor img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+            object-fit: cover;
+        }
+
+        .instructor-name {
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+
+        .course-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .read-more {
+            color: var(--secondary-color);
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .course-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .meta-item i {
+            margin-left: 5px;
+            color: var(--secondary-color);
+        }
+
+        .online {
+            color: var(--online-color);
+            font-weight: bold;
+        }
+
+        .offline {
+            color: var(--offline-color);
+            font-weight: bold;
+        }
+
+        .certificate-available {
+            color: var(--online-color);
+        }
+
+        .certificate-not-available {
+            color: var(--accent-color);
+        }
+
+        .course-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 50px;
+            color: #666;
+            font-size: 18px;
+        }
+
+        @media (max-width: 768px) {
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>نظام الكورسات الطبية</h1>
+            <p>ابحث عن الكورسات التي تناسب احتياجاتك التعليمية</p>
+        </header>
+
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="ابحث عن كورس، دكتور، وصف...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="courses-grid" id="courses-container">
+            <!-- سيتم ملؤها ديناميكيًا باستخدام JavaScript -->
+        </div>
+    </div>
+
+    <!-- مكتبة Fuse.js للبحث المرن -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2"></script>
+    
+    <script>
+        // بيانات الكورسات
+        const courses = [
+            {
+                id: 1,
+                enTitle: "Cardiology Fundamentals",
+                arTitle: "أساسيات طب القلب",
+                image: "https://source.unsplash.com/random/300x200/?cardiology",
+                instructor: {
+                    name: "Dr. Ahmed Mahmoud",
+                    image: "https://randomuser.me/api/portraits/men/32.jpg",
+                    bio: "استشاري أمراض القلب بمستشفى الجامعة، خبير في تشخيص وعلاج أمراض القلب الخلقية."
+                },
+                description: {
+                    short: "هذا الكورس يغطي أساسيات طب القلب بما في ذلك التشريح، الفيزيولوجيا، والأمراض الشائعة...",
+                    full: "هذا الكورس يغطي أساسيات طب القلب بما في ذلك التشريح، الفيزيولوجيا، والأمراض الشائعة. سيتعلم الطلاب كيفية تشخيص الحالات القلبية الأساسية، قراءة تخطيط القلب الكهربائي، وفهم مبادئ العلاج الدوائي. الكورس مناسب لطلاب الطب والمقيمين في السنوات الأولى."
+                },
+                mode: "online",
+                duration: "6 weeks",
+                hasCertificate: true,
+                price: "$199"
+            },
+            {
+                id: 2,
+                enTitle: "Pediatric Emergency Care",
+                arTitle: "الرعاية الطارئة للأطفال",
+                image: "https://source.unsplash.com/random/300x200/?pediatric",
+                instructor: {
+                    name: "Dr. Sarah Johnson",
+                    image: "https://randomuser.me/api/portraits/women/44.jpg",
+                    bio: "أخصائية طب الأطفال الطارئ بمستشفى الأطفال، متخصصة في حالات الطوارئ والرعاية الحرجة للأطفال."
+                },
+                description: {
+                    short: "كورس متكامل عن إدارة الحالات الطارئة في طب الأطفال بما في ذلك الصدمات، التسممات...",
+                    full: "كورس متكامل عن إدارة الحالات الطارئة في طب الأطفال بما في ذلك الصدمات، التسممات، والاختلاجات. يتضمن الكورس تدريبات عملية على الإنعاش القلبي الرئوي للأطفال، إدارة مجرى الهواء، والوصول الوريدي في حالات الطوارئ. الكورس معتمد من المجلس العربي لطب الطوارئ."
+                },
+                mode: "offline",
+                duration: "2 days",
+                hasCertificate: true,
+                price: "$350"
+            },
+            {
+                id: 3,
+                enTitle: "Neurosurgery Techniques",
+                arTitle: "تقنيات جراحة الأعصاب",
+                image: "https://source.unsplash.com/random/300x200/?neurosurgery",
+                instructor: {
+                    name: "Dr. Michael Chen",
+                    image: "https://randomuser.me/api/portraits/men/75.jpg",
+                    bio: "جراح أعصاب بمستشفى التخصصي، خبير في جراحات العمود الفقري وأورام الدماغ."
+                },
+                description: {
+                    short: "هذا الكورس المتقدم يغطي أحدث التقنيات في جراحة الأعصاب بما في ذلك الجراحة...",
+                    full: "هذا الكورس المتقدم يغطي أحدث التقنيات في جراحة الأعصاب بما في ذلك الجراحة بالمنظار، الجراحة المجهرية، والجراحة الوظيفية. سيتضمن الكورس دراسات حالة حقيقية، محاكاة جراحية، ومناقشات تفاعلية حول التحديات في مجال جراحة الأعصاب. مطلوب خبرة سابقة في الجراحة العامة."
+                },
+                mode: "offline",
+                duration: "3 months",
+                hasCertificate: true,
+                price: "$1200"
+            },
+            {
+                id: 4,
+                enTitle: "Medical Imaging Basics",
+                arTitle: "أساسيات التصوير الطبي",
+                image: "https://source.unsplash.com/random/300x200/?radiology",
+                instructor: {
+                    name: "Dr. Ali Hassan",
+                    image: "https://randomuser.me/api/portraits/men/63.jpg",
+                    bio: "أستاذ الأشعة التشخيصية بكلية الطب، متخصص في التصوير بالرنين المغناطيسي والأشعة المقطعية."
+                },
+                description: {
+                    short: "تعلم أساسيات قراءة وتفسير الصور الطبية بما في ذلك الأشعة السينية، الموجات...",
+                    full: "تعلم أساسيات قراءة وتفسير الصور الطبية بما في ذلك الأشعة السينية، الموجات فوق الصوتية، والأشعة المقطعية. الكورس سيركز على المظاهر الطبيعية والشائعة للأمراض في مختلف أنواع التصوير. مناسب للأطباء العامين والمقيمين في التخصصات غير الأشعة."
+                },
+                mode: "online",
+                duration: "4 weeks",
+                hasCertificate: false,
+                price: "$149"
+            },
+            {
+                id: 5,
+                enTitle: "Clinical Pharmacology",
+                arTitle: "الفارماكولوجيا السريرية",
+                image: "https://source.unsplash.com/random/300x200/?pharmacy",
+                instructor: {
+                    name: "Dr. Emily Wilson",
+                    image: "https://randomuser.me/api/portraits/women/68.jpg",
+                    bio: "أستاذة علم الأدوية السريري، باحثة في التفاعلات الدوائية والعلاجات الشخصية."
+                },
+                description: {
+                    short: "هذا الكورس يغطي المبادئ الأساسية لاستخدام الأدوية في الممارسة السريرية مع التركيز...",
+                    full: "هذا الكورس يغطي المبادئ الأساسية لاستخدام الأدوية في الممارسة السريرية مع التركيز على آلية العمل، التأثيرات الجانبية، والتفاعلات الدوائية. سيتضمن الكورس دراسات حالة تفاعلية لاتخاذ القرارات العلاجية المثلى بناءً على خصائص المريض."
+                },
+                mode: "online",
+                duration: "5 weeks",
+                hasCertificate: true,
+                price: "$179"
+            },
+            {
+                id: 6,
+                enTitle: "Dermatology for GPs",
+                arTitle: "الأمراض الجلدية للأطباء العامين",
+                image: "https://source.unsplash.com/random/300x200/?dermatology",
+                instructor: {
+                    name: "Dr. Omar Khalid",
+                    image: "https://randomuser.me/api/portraits/men/85.jpg",
+                    bio: "استشاري الأمراض الجلدية، متخصص في تشخيص وعلاج الأمراض الجلدية الشائعة والنادرة."
+                },
+                description: {
+                    short: "كورس عملي مصمم خصيصًا للأطباء العامين لتمكينهم من تشخيص وعلاج الحالات الجلدية...",
+                    full: "كورس عملي مصمم خصيصًا للأطباء العامين لتمكينهم من تشخيص وعلاج الحالات الجلدية الشائعة في العيادة الأولية. سيتعلم المشاركون كيفية التعرف على الطفح الجلدي، آفات الجلد، والأمراض المعدية الجلدية. الكورس يشمل ورش عمل عملية على الحقن الجلدية والعلاجات الموضعية."
+                },
+                mode: "hybrid",
+                duration: "3 weeks",
+                hasCertificate: true,
+                price: "$220"
+            }
+        ];
+
+        // تهيئة Fuse.js للبحث المرن
+        const fuseOptions = {
+            keys: [
+                'enTitle',
+                'arTitle',
+                'instructor.name',
+                'description.short',
+                'description.full',
+                'mode',
+                'duration',
+                'price'
+            ],
+            includeScore: true,
+            threshold: 0.4,
+            ignoreLocation: true,
+            minMatchCharLength: 2
+        };
+
+        const fuse = new Fuse(courses, fuseOptions);
+
+        // عرض الكورسات في الصفحة
+        function displayCourses(coursesToDisplay) {
+            const container = document.getElementById('courses-container');
+            container.innerHTML = '';
+
+            if (coursesToDisplay.length === 0) {
+                container.innerHTML = '<div class="no-results">لا توجد نتائج مطابقة لبحثك</div>';
+                return;
+            }
+
+            coursesToDisplay.forEach(course => {
+                const courseElement = document.createElement('div');
+                courseElement.className = 'course-card';
+                courseElement.innerHTML = `
+                    <img src="${course.image}" alt="${course.enTitle}" class="course-image">
+                    <div class="course-content">
+                        <div class="course-title">
+                            <h3>${course.enTitle}</h3>
+                            <span class="ar-title">${course.arTitle}</span>
+                        </div>
+                        
+                        <div class="instructor">
+                            <img src="${course.instructor.image}" alt="${course.instructor.name}">
+                            <span class="instructor-name">${course.instructor.name}</span>
+                        </div>
+                        
+                        <p class="course-description">${course.description.short}</p>
+                        <span class="read-more" onclick="toggleDescription(this)">قراءة المزيد</span>
+                        
+                        <div class="course-meta">
+                            <span class="meta-item">
+                                <i class="fas ${course.mode === 'online' ? 'fa-laptop' : course.mode === 'offline' ? 'fa-building' : 'fa-laptop-house'}"></i>
+                                <span class="${course.mode === 'online' ? 'online' : course.mode === 'offline' ? 'offline' : 'online'}">
+                                    ${course.mode === 'online' ? 'أونلاين' : course.mode === 'offline' ? 'أوفلاين' : 'هجين'}
+                                </span>
+                            </span>
+                            
+                            <span class="meta-item">
+                                <i class="far fa-clock"></i>
+                                <span>${course.duration}</span>
+                            </span>
+                            
+                            <span class="meta-item">
+                                <i class="fas ${course.hasCertificate ? 'fa-certificate certificate-available' : 'fa-times-circle certificate-not-available'}"></i>
+                                <span>${course.hasCertificate ? 'شهادة متوفرة' : 'لا توجد شهادة'}</span>
+                            </span>
+                        </div>
+                        
+                        <div class="course-price">${course.price}</div>
+                        
+                        <div class="full-description" style="display: none;">
+                            <h4>تفاصيل الكورس:</h4>
+                            <p>${course.description.full}</p>
+                            
+                            <h4>معلومات الدكتور:</h4>
+                            <p>${course.instructor.bio}</p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(courseElement);
+            });
+        }
+
+        // تبديل عرض الوصف الكامل
+        function toggleDescription(element) {
+            const fullDescription = element.nextElementSibling.nextElementSibling.nextElementSibling;
+            
+            if (fullDescription.style.display === 'none') {
+                fullDescription.style.display = 'block';
+                element.textContent = 'قراءة أقل';
+            } else {
+                fullDescription.style.display = 'none';
+                element.textContent = 'قراءة المزيد';
+            }
+        }
+
+        // البحث عند الكتابة
+        document.getElementById('search-input').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.trim();
+            
+            if (searchTerm.length === 0) {
+                displayCourses(courses);
+                return;
+            }
+            
+            const results = fuse.search(searchTerm);
+            const filteredCourses = results.map(result => result.item);
+            displayCourses(filteredCourses);
+        });
+
+        // عرض جميع الكورسات عند تحميل الصفحة
+        window.onload = function() {
+            displayCourses(courses);
+        };
+    </script>
+</body>
+</html>
